@@ -2,6 +2,7 @@ package api
 
 import (
 	"awesomeProject/src/api/router"
+	"awesomeProject/src/auto"
 	"awesomeProject/src/config"
 	"fmt"
 	"log"
@@ -10,6 +11,7 @@ import (
 
 func Run(){
 	config.Load()
+	auto.Load()
 	fmt.Printf("\n\tListening [::]:%d\n", config.PORT)
 	listen(config.PORT)
 
