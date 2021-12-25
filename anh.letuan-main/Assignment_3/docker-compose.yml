@@ -1,0 +1,41 @@
+version: '2.1'
+
+networks:
+  app-assignment4:
+    driver: bridge
+
+services:
+  mysql:
+    image: docker.io/bitnami/mysql:8.0
+    container_name: mysql
+    ports:
+      - '3307:3306'
+    volumes:
+      - 'mysql_data:/bitnami/mysql/data'
+      - './my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro'
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootpassword"
+      MYSQL_DATABASE: "weatherForecast"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "1910"
+      MYSQL_CHARACTER_SET: "utf8"
+    networks:
+      - app-assignment4
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh']
+      interval: 15s
+      timeout: 20s
+      retries: 10
+#  myapp:
+#    image: 'assignment4'
+#    networks:
+#      - app-assignment4
+#    ports:
+#      - '8080:8080'
+#    depends_on:
+#      mysql:
+#        condition: service_healthy
+
+volumes:
+  mysql_data:
+    driver: local
